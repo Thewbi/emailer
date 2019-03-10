@@ -25,6 +25,12 @@
     <Filter Include="Quelldateien\window">
       <UniqueIdentifier>{c083eb46-8151-4bec-b28c-13b08b9daa56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\component">
+      <UniqueIdentifier>{851f4bc8-5da6-47ca-90cf-6c127c1517d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\component">
+      <UniqueIdentifier>{f453ea3f-097c-4853-bdd9-d37783cae2ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -45,6 +51,12 @@
     <ClInclude Include="window\Window.h">
       <Filter>Headerdateien\window</Filter>
     </ClInclude>
+    <ClInclude Include="component\BaseComponent.h">
+      <Filter>Headerdateien\component</Filter>
+    </ClInclude>
+    <ClInclude Include="component\ButtonComponent.h">
+      <Filter>Headerdateien\component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -58,6 +70,12 @@
     </ClCompile>
     <ClCompile Include="window\Window.cpp">
       <Filter>Quelldateien\window</Filter>
+    </ClCompile>
+    <ClCompile Include="component\BaseComponent.cpp">
+      <Filter>Quelldateien\component</Filter>
+    </ClCompile>
+    <ClCompile Include="component\ButtonComponent.cpp">
+      <Filter>Quelldateien\component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -147,6 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="component\BaseComponent.h" />
+    <ClInclude Include="component\ButtonComponent.h" />
     <ClInclude Include="emailer.h" />
     <ClInclude Include="factory\ButtonFactory.h" />
     <ClInclude Include="Resource.h" />
@@ -155,6 +157,8 @@
     <ClInclude Include="window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="component\BaseComponent.cpp" />
+    <ClCompile Include="component\ButtonComponent.cpp" />
     <ClCompile Include="emailer.cpp" />
     <ClCompile Include="factory\ButtonFactory.cpp" />
     <ClCompile Include="stdafx.cpp">

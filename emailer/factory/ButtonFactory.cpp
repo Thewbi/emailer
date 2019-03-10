@@ -10,15 +10,13 @@ namespace em
 		{
 		}
 
-
 		ButtonFactory::~ButtonFactory()
 		{
 		}
 
-
-		HWND ButtonFactory::createButton(HWND hWnd, long button_id)
+		std::unique_ptr<ButtonComponent> ButtonFactory::createButton(const std::string id, const HWND hWnd, const long button_id)
 		{
-			return CreateWindow(
+			HWND buttonHWnd = CreateWindow(
 				L"BUTTON",  // Predefined class; Unicode assumed 
 				L"OK",      // Button text 
 				WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,  // Styles 
@@ -30,6 +28,8 @@ namespace em
 				(HMENU)button_id,       // button id.
 				(HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE),
 				NULL);      // Pointer not needed.
+
+			return std::make_unique<ButtonComponent>(id, buttonHWnd);
 		}
 
 	}

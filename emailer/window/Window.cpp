@@ -1,13 +1,10 @@
 #include "stdafx.h"
 #include "Window.h"
 
-void Window::lol()
+Window::Window(HINSTANCE hInstance) : hInstance_(hInstance)
 {
-	std::cout << "lol" << std::endl;
-}
+	id_ = "wnd_main_window";
 
-Window::Window(HINSTANCE hInstance) : hInstance(hInstance)
-{
 	// titelleistentext
 	WCHAR szTitle[100];
 	// der Klassenname des Hauptfensters.
@@ -18,16 +15,16 @@ Window::Window(HINSTANCE hInstance) : hInstance(hInstance)
 	LoadStringW(hInstance, IDC_EMAILER, szWindowClass, 100);
 	MyRegisterClass(hInstance, szWindowClass);
 
-	hWnd = ::CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+	hWnd_ = ::CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, this);
 
-	if (!hWnd)
+	if (!hWnd_)
 	{
 		throw "CouldNotCreateWindow";
 	}
 
-	ShowWindow(hWnd, SW_SHOW);
-	UpdateWindow(hWnd);
+	ShowWindow(hWnd_, SW_SHOW);
+	UpdateWindow(hWnd_);
 }
 
 Window::~Window()
@@ -60,8 +57,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance, WCHAR szWindowClass[100])
 	return RegisterClassExW(&wcex);
 }
 
-
-
 //
 //  FUNKTION: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -74,9 +69,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance, WCHAR szWindowClass[100])
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
-	//CREATESTRUCT *createstruct = (CREATESTRUCT*) lParam;
-
 	Window *wndptr = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWL_USERDATA));
 
 	switch (message)
@@ -89,19 +81,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 	{
 		int wmId = LOWORD(wParam);
-		// Menüauswahl analysieren:
 		switch (wmId)
 		{
 		case IDM_ABOUT:
-			DialogBox(wndptr->get_hInstance(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+			::DialogBox(wndptr->get_hInstance(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 		case IDM_EXIT:
-			DestroyWindow(hWnd);
-			break;
-		case IDB_TEST:
-			DestroyWindow(hWnd);
+			::DestroyWindow(hWnd);
 			break;
 		default:
+			if (wndptr->componentMap_.find(IDB_TEST) != wndptr->componentMap_.end())
+			{
+				wndptr->componentMap_.at(IDB_TEST)->handleEvent();
+			}
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
 	}
@@ -116,9 +108,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	break;
 
 	case WM_MOVE:
-	{
-		wndptr->lol();
-	}
 	break;
 
 	case WM_DESTROY:
@@ -129,8 +118,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	return 0;
 }
-
-
 
 // Meldungshandler für Infofeld.
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
