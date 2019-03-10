@@ -30,3 +30,5 @@
 *.exe
 *.out
 *.app
+/.vs/emailer/v15/Browse.VC.opendb
+/.vs/emailer/v15/Browse.VC.db
